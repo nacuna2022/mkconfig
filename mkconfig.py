@@ -2,6 +2,7 @@
 # nacuna
 # generate a config header from a .config
 import sys
+import argparse
 
 # create a class for modelling a .config file
 # next_config() method retrieves the next key/value pair until it can't
@@ -84,8 +85,13 @@ class header_config:
             fout.write(ftr)
 
 if (__name__ == "__main__"):
-    dotconfig = dot_config("testdir/.config")
-    headerconfig = header_config("testdir/config.h")
+    ap = argparse.ArgumentParser(description="generate a configuration header file from a .config file")
+    ap.add_argument("-i", "--config", help="the .config file to use")
+    ap.add_argument("-o", "--header", help="generate this header file")
+    args = ap.parse_args()
+
+    dotconfig = dot_config(args.config)
+    headerconfig = header_config(args.header)
     headerconfig.set_project("RL06")
 
     while(True):
